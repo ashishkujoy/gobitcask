@@ -13,7 +13,7 @@ func TestOpenDataFile(t *testing.T) {
 	path := temp_dir + "/test_data_file1"
 	defer os.Remove(path)
 
-	df, err := OpenDataFile(path)
+	df, err := OpenDataFile(path, 1)
 	require.NoError(t, err)
 	require.Equal(t, int64(0), df.size)
 }
@@ -28,7 +28,7 @@ func TestOpenAlreadyWritenDataFile(t *testing.T) {
 	file.Write([]byte("hello"))
 	file.Sync()
 
-	df, err := OpenDataFile(path)
+	df, err := OpenDataFile(path, 2)
 	require.NoError(t, err)
 	require.Equal(t, int64(5), df.size)
 }
@@ -38,7 +38,7 @@ func TestReadAndWrites(t *testing.T) {
 	path := path.Join(temp_dir, "test_data_file3")
 	defer os.Remove(path)
 
-	df, err := OpenDataFile(path)
+	df, err := OpenDataFile(path, 3)
 	require.NoError(t, err)
 
 	kv := NewPersistantKV([]byte("hello"), []byte("Hello, World!"))

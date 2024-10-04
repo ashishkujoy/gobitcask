@@ -6,11 +6,12 @@ import (
 )
 
 type DataFile struct {
+	id   uint32
 	file *os.File
 	size int64
 }
 
-func OpenDataFile(path string) (*DataFile, error) {
+func OpenDataFile(path string, id uint32) (*DataFile, error) {
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR|os.O_APPEND, 0644)
 	if err != nil {
 		return nil, err
@@ -21,7 +22,11 @@ func OpenDataFile(path string) (*DataFile, error) {
 		return nil, err
 	}
 
-	return &DataFile{file: file, size: stat.Size()}, nil
+	return &DataFile{
+		file: file,
+		size: stat.Size(),
+		id:   id,
+	}, nil
 }
 
 func (df *DataFile) Close() error {
