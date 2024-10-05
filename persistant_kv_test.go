@@ -1,8 +1,9 @@
 package bitcask
 
 import (
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestPersistantEmptyKeyValue(t *testing.T) {
@@ -15,7 +16,7 @@ func TestPersistantEmptyKeyValue(t *testing.T) {
 	kv2, err := PersistantKVFromBytes(data)
 
 	require.NoError(t, err)
-	require.Equal(t, key, kv2.key)
+	require.Equal(t, string(key), string(kv2.key))
 	require.Equal(t, string(value), string(kv2.value))
 }
 
@@ -29,7 +30,7 @@ func TestPersistantEmptyKeyNonEmptyValue(t *testing.T) {
 	kv2, err := PersistantKVFromBytes(data)
 
 	require.NoError(t, err)
-	require.Equal(t, key, kv2.key)
+	require.Equal(t, string(key), string(kv2.key))
 	require.Equal(t, string(value), string(kv2.value))
 }
 
@@ -43,7 +44,7 @@ func TestPersistantNonEmptyKeyEmptyValue(t *testing.T) {
 	kv2, err := PersistantKVFromBytes(data)
 
 	require.NoError(t, err)
-	require.Equal(t, key, kv2.key)
+	require.Equal(t, string(key), string(kv2.key))
 	require.Equal(t, string(value), string(kv2.value))
 }
 
@@ -57,6 +58,6 @@ func TestPersistantKVReadWrite(t *testing.T) {
 	kv2, err := PersistantKVFromBytes(data)
 
 	require.NoError(t, err)
-	require.Equal(t, key, kv2.key)
+	require.Equal(t, string(key), string(kv2.key))
 	require.Equal(t, string(value), string(kv2.value))
 }

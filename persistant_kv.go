@@ -9,14 +9,17 @@ var (
 	reservedKeySize = unsafe.Sizeof(uint32(0))
 )
 
+type Key []byte
+type Value []byte
+
 type PersistantKV struct {
 	// key
-	key []byte
+	key Key
 	// value
-	value []byte
+	value Value
 }
 
-func NewPersistantKV(key, value []byte) *PersistantKV {
+func NewPersistantKV(key Key, value Value) *PersistantKV {
 	return &PersistantKV{
 		key:   key,
 		value: value,
