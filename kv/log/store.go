@@ -73,3 +73,27 @@ func (store *Store) read(offset int64, size uint32) ([]byte, error) {
 	}
 	return buf, nil
 }
+
+func (store *Store) readFull() ([]byte, error) {
+	return os.ReadFile(store.reader.Name())
+}
+
+// sizeInBytes Returns the file size in bytes.
+func (store *Store) sizeInBytes() int64 {
+	return store.currentWriteOffset
+}
+
+// sync Performs a file sync, ensures all the disk blocks (or pages) at the Kernel page cache are flushed to the disk
+func (store *Store) sync() {
+	store.writer.Sync()
+}
+
+// stopWrites Closes the write file pointer. This operation is called when the active segment has reached its size threshold.
+func (store *Store) stopWrites() {
+	store.writer.Close()
+}
+
+// remove Removes the file
+func (store *Store) remove() {
+	_ = os.RemoveAll(store.reader.Name())
+}

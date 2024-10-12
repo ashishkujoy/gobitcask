@@ -107,6 +107,28 @@ func decode(content []byte) *StoredEntry {
 	return storedEntry
 }
 
+// decodeMulti performs multiple decode operations and returns an array of MappedStoredEntry
+// This method is invoked when a segment file needs to be read completely. This happens during reload and merge operations.
+func decodeMulti[Key config.BitcaskKey](content []byte, keyMapper func([]byte) Key) []*MappedStoredEntry[Key] {
+	contentLength := uint32(len(content))
+	var offset uint32 = 0
+	var entries []*MappedStoredEntry[Key]
+
+	for offset < contentLength {
+		entry, traversedOffset := decodeFrom(content, uint32(offset))
+		entries = append(entries, &MappedStoredEntry[Key]{
+			Key:         keyMapper(entry.Key),
+			Value:       entry.Value,
+			Deleted:     entry.Deleted,
+			KeyOffset:   offset,
+			EntryLength: traversedOffset,
+		})
+		offset = traversedOffset
+	}
+
+	return entries
+}
+
 func decodeFrom(content []byte, offset uint32) (*StoredEntry, uint32) {
 	timestamp := littleEndian.Uint32(content[offset:])
 	offset += reservedTimestampSize
