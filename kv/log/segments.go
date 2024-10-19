@@ -32,9 +32,11 @@ func NewSegments[Key config.BitcaskKey](
 	idGenerator := id.NewTimestampBasedFileIdGenerator(clock)
 	segmentId := idGenerator.Next()
 	segment, err := NewSegment[Key](segmentId, directory)
+
 	if err != nil {
 		return nil, err
 	}
+
 	segments := Segments[Key]{
 		activeSegment:      segment,
 		clock:              clock,
@@ -43,6 +45,7 @@ func NewSegments[Key config.BitcaskKey](
 		inactiveSegments:   map[uint64]*Segment[Key]{},
 		fileIdGenerator:    idGenerator,
 	}
+
 	if err := segments.reload(); err != nil {
 		return nil, err
 	}
@@ -60,7 +63,8 @@ func (segments *Segments[Key]) reload() error {
 	suffix := segmentFilePrefix + "." + segmentFileSuffix
 
 	for _, entry := range entries {
-		if strings.HasPrefix(entry.Name(), suffix) {
+		filepath := entry.Name()
+		if strings.HasSuffix(filepath, suffix) {
 			fileId, err := strconv.ParseUint(strings.Split(entry.Name(), "_")[0], 10, 64)
 			if err != nil {
 				return err
@@ -125,7 +129,7 @@ func (segments *Segments[Key]) ReadInactiveSegments(
 	fileIds := make([]uint64, totalSegments)
 
 	for _, segment := range segments.inactiveSegments {
-		if index > totalSegments {
+		if index >= totalSegments {
 			break
 		}
 
