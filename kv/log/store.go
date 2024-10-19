@@ -84,8 +84,8 @@ func (store *Store) sizeInBytes() int64 {
 }
 
 // sync Performs a file sync, ensures all the disk blocks (or pages) at the Kernel page cache are flushed to the disk
-func (store *Store) sync() {
-	store.writer.Sync()
+func (store *Store) sync() error {
+	return store.writer.Sync()
 }
 
 // stopWrites Closes the write file pointer. This operation is called when the active segment has reached its size threshold.

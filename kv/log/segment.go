@@ -100,8 +100,8 @@ func (segment *Segment[Key]) sizeInBytes() int64 {
 }
 
 // sync Performs a file sync, ensures all the disk blocks (or pages) at the Kernel page cache are flushed to the disk
-func (segment *Segment[Key]) sync() {
-	segment.store.sync()
+func (segment *Segment[Key]) sync() error {
+	return segment.store.sync()
 }
 
 // stopWrites Closes the write file pointer. This operation is called when the active segment has reached its size threshold.

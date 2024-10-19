@@ -229,11 +229,17 @@ func (segments *Segments[Key]) AllInactiveSegments() map[uint64]*Segment[Key] {
 }
 
 // Sync Performs a file sync, ensures all the disk blocks (or pages) at the Kernel page cache are flushed to the disk
-func (segments *Segments[Key]) Sync() {
-	segments.activeSegment.sync()
-	for _, segment := range segments.inactiveSegments {
-		segment.sync()
+func (segments *Segments[Key]) Sync() error {
+	err := segments.activeSegment.sync()
+	if err != nil {
+		return err
 	}
+	for _, segment := range segments.inactiveSegments {
+		if err := segment.sync(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Shutdown sets the active segment to nil and deletes all the keys from the inactive segments

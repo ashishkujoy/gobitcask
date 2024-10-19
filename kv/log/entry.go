@@ -121,7 +121,7 @@ func decodeMulti[Key config.BitcaskKey](content []byte, keyMapper func([]byte) K
 			Value:       entry.Value,
 			Deleted:     entry.Deleted,
 			KeyOffset:   offset,
-			EntryLength: traversedOffset,
+			EntryLength: traversedOffset - offset,
 		})
 		offset = traversedOffset
 	}

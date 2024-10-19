@@ -124,10 +124,7 @@ func TestDeleteAndDoAGet(t *testing.T) {
 }
 
 func TestReadAPairOfInactiveSegments(t *testing.T) {
-	tempDir, _ := os.MkdirTemp(os.TempDir(), "testPairOfInactiveSegments")
-	defer os.RemoveAll(tempDir)
-
-	config := config.NewConfig(tempDir, 8, 10, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, 10, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -135,6 +132,7 @@ func TestReadAPairOfInactiveSegments(t *testing.T) {
 	store.Put("Disk Type", []byte("Solid State Drives"))
 	store.Put("Engine", []byte("Turbo Bitcask Engine"))
 	store.Put("Editor", []byte("Visual Studio Code, dark mode theme"))
+	store.Sync()
 
 	_, entries, _ := store.ReadInactiveSegments(2, config.MergeConfig().KeyMapper())
 	keys := toSortedKeys(entries)

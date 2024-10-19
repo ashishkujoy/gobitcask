@@ -45,6 +45,9 @@ func NewKVStore[Key config.BitcaskKey](config *config.Config[Key]) (*KVStore[Key
 // - Segments abstraction will append the key and the value to the active segment if the size of the active segment is less than the threshold, else it will perform a rollover of the active segment
 // 2.Once the append operation is successful, it will write the key and the Entry to the KeyDirectory, which is an in-memory representation of the key and its position in an append-only segment
 func (store *KVStore[Key]) Put(key Key, value []byte) error {
+	store.rwlock.Lock()
+	defer store.rwlock.Unlock()
+
 	appendResponse, err := store.segments.Append(key, value)
 	if err != nil {
 		return err
@@ -60,6 +63,8 @@ func (store *KVStore[Key]) Update(key Key, value []byte) error {
 }
 
 func (store *KVStore[Key]) Delete(key Key) error {
+	store.rwlock.Lock()
+	defer store.rwlock.Unlock()
 	_, err := store.segments.AppendDelete(key)
 	if err != nil {
 		return err
@@ -99,6 +104,7 @@ func (store *KVStore[Key]) Get(key Key) ([]byte, error) {
 	if !ok {
 		return nil, fmt.Errorf("key %v not present in store", key)
 	}
+
 	storedEntry, err := store.segments.Read(entry.FileId, entry.Offset, entry.EntryLength)
 
 	if err != nil {
@@ -157,11 +163,11 @@ func (store *KVStore[Key]) Clear() {
 }
 
 // Sync performs a sync of all the active and inactive segments. This implementation uses the Segment vocabulary over DataFile vocabulary
-func (store *KVStore[Key]) Sync() {
+func (store *KVStore[Key]) Sync() error {
 	store.rwlock.Lock()
 	defer store.rwlock.Unlock()
 
-	store.segments.Sync()
+	return store.segments.Sync()
 }
 
 // Shutdown performs a shutdown of the segments which involves setting the active segment to nil and removing the entire in-memory representation of the inactive segments
