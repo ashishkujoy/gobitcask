@@ -17,14 +17,13 @@ type benchmarkTestCase struct {
 }
 
 func BenchmarkGet(b *testing.B) {
-	kernalPageSize := os.Getpagesize()
 	dir, err := os.MkdirTemp(os.TempDir(), fmt.Sprintf("%v", time.Now().UnixMilli()))
 	require.NoError(b, err)
 	defer os.RemoveAll(dir)
 
 	mergeConfig := config.NewMergeConfig(2, keyMapper)
 
-	config := config.NewConfig(".", uint64(kernalPageSize-100), 100, mergeConfig)
+	config := config.NewConfig(dir, 100000000, 100, mergeConfig)
 
 	tests := []benchmarkTestCase{
 		{"128B", 128},
@@ -63,14 +62,13 @@ func BenchmarkGet(b *testing.B) {
 }
 
 func BenchmarkPut(b *testing.B) {
-	kernalPageSize := os.Getpagesize()
 	dir, err := os.MkdirTemp(os.TempDir(), fmt.Sprintf("%v", time.Now().UnixMilli()))
 	require.NoError(b, err)
 	defer os.RemoveAll(dir)
 
 	mergeConfig := config.NewMergeConfig(2, keyMapper)
 
-	config := config.NewConfig(".", uint64((kernalPageSize-100)*10), 100, mergeConfig)
+	config := config.NewConfig(dir, 100000000, 100, mergeConfig)
 
 	tests := []benchmarkTestCase{
 		{"128B", 128},
