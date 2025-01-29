@@ -23,7 +23,7 @@ func BenchmarkGet(b *testing.B) {
 
 	mergeConfig := config.NewMergeConfig(2, keyMapper)
 
-	config := config.NewConfig(dir, 100000000, 100, mergeConfig)
+	config := config.NewConfig(dir, 100000000, mergeConfig)
 
 	tests := []benchmarkTestCase{
 		{"128B", 128},
@@ -68,7 +68,7 @@ func BenchmarkPut(b *testing.B) {
 
 	mergeConfig := config.NewMergeConfig(2, keyMapper)
 
-	config := config.NewConfig(dir, 100000000, 100, mergeConfig)
+	config := config.NewConfig(dir, 100000000, mergeConfig)
 
 	tests := []benchmarkTestCase{
 		{"128B", 128},

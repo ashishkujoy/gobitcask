@@ -9,7 +9,7 @@ import (
 )
 
 func TestReloadStore(t *testing.T) {
-	config := config.NewConfig(".", 256, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 256, config.NewMergeConfig(2, keyMapper))
 	kv, _ := NewKVStore(config)
 
 	for count := 1; count <= 100; count++ {

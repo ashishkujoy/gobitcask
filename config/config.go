@@ -3,41 +3,22 @@ package config
 import "ashishkujoy/bitcask/clock"
 
 type Config[Key BitcaskKey] struct {
-	directory            string
-	maxSegmentSizeBytes  uint64
-	keyDirectoryCapacity uint64
-	mergeConfig          *MergeConfig[Key]
-	clock                clock.Clock
+	directory           string
+	maxSegmentSizeBytes uint64
+	mergeConfig         *MergeConfig[Key]
+	clock               clock.Clock
 }
 
-func NewConfig[Key BitcaskKey](
-	directory string,
-	maxSegmentSizeBytes,
-	keyDirectoryCapacity uint64,
-	mergeConfig *MergeConfig[Key],
-) *Config[Key] {
-	return NewConfigWithClock[Key](
-		directory,
-		maxSegmentSizeBytes,
-		keyDirectoryCapacity,
-		mergeConfig,
-		clock.NewSystemClock(),
-	)
+func NewConfig[Key BitcaskKey](directory string, maxSegmentSizeBytes uint64, mergeConfig *MergeConfig[Key]) *Config[Key] {
+	return NewConfigWithClock[Key](directory, maxSegmentSizeBytes, mergeConfig, clock.NewSystemClock())
 }
 
-func NewConfigWithClock[Key BitcaskKey](
-	directory string,
-	maxSegmentSizeBytes,
-	keyDirectoryCapacity uint64,
-	mergeConfig *MergeConfig[Key],
-	clock clock.Clock,
-) *Config[Key] {
+func NewConfigWithClock[Key BitcaskKey](directory string, maxSegmentSizeBytes uint64, mergeConfig *MergeConfig[Key], clock clock.Clock) *Config[Key] {
 	return &Config[Key]{
-		directory:            directory,
-		maxSegmentSizeBytes:  maxSegmentSizeBytes,
-		keyDirectoryCapacity: keyDirectoryCapacity,
-		mergeConfig:          mergeConfig,
-		clock:                clock,
+		directory:           directory,
+		maxSegmentSizeBytes: maxSegmentSizeBytes,
+		mergeConfig:         mergeConfig,
+		clock:               clock,
 	}
 }
 
@@ -47,10 +28,6 @@ func (config *Config[Key]) Directory() string {
 
 func (config *Config[Key]) MaxSegmentSizeInBytes() uint64 {
 	return config.maxSegmentSizeBytes
-}
-
-func (config *Config[Key]) KeyDirectoryCapacity() uint64 {
-	return config.keyDirectoryCapacity
 }
 
 func (config *Config[Key]) Clock() clock.Clock {

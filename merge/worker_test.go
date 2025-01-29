@@ -14,7 +14,7 @@ var keyMapper = func(b []byte) serializableKey {
 }
 
 func TestMergeSegmentsWithUpdate(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := kv.NewKVStore(config)
 	defer store.Clear()
 
@@ -30,7 +30,7 @@ func TestMergeSegmentsWithUpdate(t *testing.T) {
 }
 
 func TestMergeSegmentsWithDeleteEntry(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := kv.NewKVStore(config)
 	defer store.Clear()
 
@@ -46,7 +46,7 @@ func TestMergeSegmentsWithDeleteEntry(t *testing.T) {
 }
 
 func TestMergeMoreThan2Segments(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := kv.NewKVStore(config)
 	defer store.Clear()
 
@@ -73,7 +73,7 @@ func TestMergeSegmentsOnSchedule(t *testing.T) {
 		2*time.Second,
 		keyMapper,
 	)
-	config := config.NewConfig(".", 8, 16, mergeConfig)
+	config := config.NewConfig(".", 8, mergeConfig)
 	store, _ := kv.NewKVStore(config)
 	defer store.Clear()
 

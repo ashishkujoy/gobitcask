@@ -9,7 +9,7 @@ import (
 )
 
 func TestPutConcurrently(t *testing.T) {
-	config := bitCaskConfig.NewConfig(".", 32, 16, bitCaskConfig.NewMergeConfig(2, func(key []byte) serializableKey {
+	config := bitCaskConfig.NewConfig(".", 32, bitCaskConfig.NewMergeConfig(2, func(key []byte) serializableKey {
 		return serializableKey(key)
 	}))
 	kv, _ := NewKVStore(config)
@@ -48,7 +48,7 @@ func TestPutConcurrently(t *testing.T) {
 }
 
 func TestPutConcurrentlyAcrossManyGoroutines(t *testing.T) {
-	config := bitCaskConfig.NewConfig(".", 10124, 16, bitCaskConfig.NewMergeConfig(2, func(key []byte) serializableKey {
+	config := bitCaskConfig.NewConfig(".", 10124, bitCaskConfig.NewMergeConfig(2, func(key []byte) serializableKey {
 		return serializableKey(key)
 	}))
 	kv, _ := NewKVStore(config)

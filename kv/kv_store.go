@@ -31,7 +31,7 @@ func NewKVStore[Key config.BitcaskKey](config *config.Config[Key]) (*KVStore[Key
 
 	store := &KVStore[Key]{
 		segments:     segments,
-		keyDirectory: NewKeyDirectory[Key](config.KeyDirectoryCapacity()),
+		keyDirectory: NewKeyDirectory[Key](),
 	}
 
 	if err := store.reload(config); err != nil {

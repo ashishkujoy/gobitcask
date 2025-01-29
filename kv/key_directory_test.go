@@ -14,7 +14,7 @@ func (key serializableKey) Serialize() []byte {
 }
 
 func TestPutsAKeyInKeyDirectory(t *testing.T) {
-	keyDirectory := NewKeyDirectory[serializableKey](16)
+	keyDirectory := NewKeyDirectory[serializableKey]()
 	keyDirectory.Put("topic", NewEntry(1, 10, 20))
 
 	entry, _ := keyDirectory.Get("topic")
@@ -22,7 +22,7 @@ func TestPutsAKeyInKeyDirectory(t *testing.T) {
 }
 
 func TestDeletesAKeyInKeyDirectory(t *testing.T) {
-	keyDirectory := NewKeyDirectory[serializableKey](16)
+	keyDirectory := NewKeyDirectory[serializableKey]()
 	keyDirectory.Put("topic", NewEntry(1, 10, 20))
 
 	entry, _ := keyDirectory.Get("topic")
@@ -34,14 +34,14 @@ func TestDeletesAKeyInKeyDirectory(t *testing.T) {
 }
 
 func TestGetANonExistentKeyInKeyDirectory(t *testing.T) {
-	keyDirectory := NewKeyDirectory[serializableKey](16)
+	keyDirectory := NewKeyDirectory[serializableKey]()
 
 	_, ok := keyDirectory.Get("non-existing")
 	require.False(t, ok)
 }
 
 func TestBulkUpdatesKeys(t *testing.T) {
-	keyDirectory := NewKeyDirectory[serializableKey](16)
+	keyDirectory := NewKeyDirectory[serializableKey]()
 	response := &log.WriteBackResponse[serializableKey]{
 		Key: "topic",
 		AppendEntryResponse: &log.AppendEntryResponse{

@@ -18,7 +18,7 @@ var keyMapper = func(b []byte) serializableKey {
 func TestPutAndASilentGet(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testASilentGet")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -33,7 +33,7 @@ func TestPutAndASilentGet(t *testing.T) {
 func TestSilentGetANonExistentKey(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testGetNonExistentKey")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -45,7 +45,7 @@ func TestSilentGetANonExistentKey(t *testing.T) {
 func TestPutAndDoGet(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testPutAndGet")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -58,7 +58,7 @@ func TestPutAndDoGet(t *testing.T) {
 func TestGetANonExistentKey(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testGetNonExistentKey")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -70,7 +70,7 @@ func TestGetANonExistentKey(t *testing.T) {
 func TestUpdateAndDoASilentGet(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testUpdateAndSilentGet")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -85,7 +85,7 @@ func TestUpdateAndDoASilentGet(t *testing.T) {
 func TestUpdateAndDoAGet(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testUpdateAndGet")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -100,7 +100,7 @@ func TestUpdateAndDoAGet(t *testing.T) {
 func TestDeleteAndDoASilentGet(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testDeleteAndSilentGet")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -113,7 +113,7 @@ func TestDeleteAndDoASilentGet(t *testing.T) {
 func TestDeleteAndDoAGet(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testDeleteAndGet")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 80, 2, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 80, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -124,7 +124,7 @@ func TestDeleteAndDoAGet(t *testing.T) {
 }
 
 func TestReadAPairOfInactiveSegments(t *testing.T) {
-	config := config.NewConfig(".", 8, 10, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -146,7 +146,7 @@ func TestReadAPairOfInactiveSegments(t *testing.T) {
 func TestReadAllInactiveSegments(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testAllInactiveSegments")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 8, 10, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -167,7 +167,7 @@ func TestReadAllInactiveSegments(t *testing.T) {
 func TestWriteBacks(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "testWriteBacks")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 8, 10, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 	defer store.Clear()
 
@@ -192,7 +192,7 @@ func TestWriteBacks(t *testing.T) {
 func TestReload(t *testing.T) {
 	tempDir, _ := os.MkdirTemp(os.TempDir(), "test")
 	defer os.RemoveAll(tempDir)
-	config := config.NewConfig(tempDir, 8, 10, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(tempDir, 8, config.NewMergeConfig(2, keyMapper))
 	store, _ := NewKVStore(config)
 
 	store.Put("topic", []byte("microservices"))

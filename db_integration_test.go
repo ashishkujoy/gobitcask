@@ -19,7 +19,7 @@ var keyMapper = func(b []byte) serializableKey {
 }
 
 func TestAPutAndDoASilentGet(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -31,7 +31,7 @@ func TestAPutAndDoASilentGet(t *testing.T) {
 }
 
 func TestSilentGetANonExistentKey(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -41,7 +41,7 @@ func TestSilentGetANonExistentKey(t *testing.T) {
 }
 
 func TestPutAndDoAGet(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -52,7 +52,7 @@ func TestPutAndDoAGet(t *testing.T) {
 }
 
 func TestGetANonExistent(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -62,7 +62,7 @@ func TestGetANonExistent(t *testing.T) {
 }
 
 func TestUpdateAndDoASilentGet(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -77,7 +77,7 @@ func TestUpdateAndDoASilentGet(t *testing.T) {
 }
 
 func TestUpdateAndDoAGet(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -92,7 +92,7 @@ func TestUpdateAndDoAGet(t *testing.T) {
 }
 
 func TestDeleteAndDoASilentGet(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -104,7 +104,7 @@ func TestDeleteAndDoASilentGet(t *testing.T) {
 }
 
 func TestDeleteAndDoAGet(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 	defer db.Shutdown()
 	defer db.clearLog()
@@ -116,7 +116,7 @@ func TestDeleteAndDoAGet(t *testing.T) {
 }
 
 func TestReloadDb(t *testing.T) {
-	config := config.NewConfig(".", 8, 16, config.NewMergeConfig(2, keyMapper))
+	config := config.NewConfig(".", 8, config.NewMergeConfig(2, keyMapper))
 	db, _ := NewDB(config)
 
 	for count := 1; count <= 100; count++ {
