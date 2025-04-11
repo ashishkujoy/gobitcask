@@ -78,16 +78,16 @@ func (segment *Segment[Key]) append(entry *Entry[Key]) (*AppendEntryResponse, er
 }
 
 // read performs a read operation from the offset in the segment file. This method is invoked in the Get operation
-func (segement *Segment[Key]) read(offset int64, size uint32) (*StoredEntry, error) {
-	bytes, err := segement.store.read(offset, size)
+func (segment *Segment[Key]) read(offset int64, size uint32) (*StoredEntry, error) {
+	bytes, err := segment.store.read(offset, size)
 	if err != nil {
 		return nil, err
 	}
 	return decode(bytes), nil
 }
 
-func (segement *Segment[Key]) ReadFull(keyMapper func([]byte) Key) ([]*MappedStoredEntry[Key], error) {
-	bytes, err := segement.store.readFull()
+func (segment *Segment[Key]) ReadFull(keyMapper func([]byte) Key) ([]*MappedStoredEntry[Key], error) {
+	bytes, err := segment.store.readFull()
 	if err != nil {
 		return nil, err
 	}

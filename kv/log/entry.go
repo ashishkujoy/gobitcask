@@ -115,7 +115,7 @@ func decodeMulti[Key config.BitcaskKey](content []byte, keyMapper func([]byte) K
 	var entries []*MappedStoredEntry[Key]
 
 	for offset < contentLength {
-		entry, traversedOffset := decodeFrom(content, uint32(offset))
+		entry, traversedOffset := decodeFrom(content, offset)
 		entries = append(entries, &MappedStoredEntry[Key]{
 			Key:         keyMapper(entry.Key),
 			Value:       entry.Value,
